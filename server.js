@@ -3,7 +3,7 @@ var http    = require("http");              // http server core module
 var express = require("express");           // web framework external module
 var serveStatic = require('serve-static');  // serve static files
 var socketIo = require("socket.io");        // web socket external module
-var easyrtc = require("easyrtc");               // EasyRTC external module
+var easyrtc = require("open-easyrtc");               // EasyRTC external module
 
 // Set process name
 process.title = "node-easyrtc";
@@ -16,7 +16,7 @@ var app = express();
 app.use(express.static('public'));
 
 // Start Express http server
-var webServer = http.createServer(app).listen(port);
+var webServer = http.createServer(app);
 
 // Start Socket.io so it attaches itself to Express server
 var socketServer = socketIo.listen(webServer, {"log level":1});
