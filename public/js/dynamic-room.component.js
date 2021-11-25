@@ -10,26 +10,25 @@ AFRAME.registerComponent("dynamic-room", {
 			window.alert("Please add a room name in the URL, eg. ?room=myroom");
 		}
 
-		var webrtc = params.hasOwnProperty("webrtc");
-		var adapter = webrtc ? "easyrtc" : "wseasyrtc";
-		var voice = params.hasOwnProperty("voice");
-
-		// Set local user's name
-		window.onload = function () {
-			var player = document.getElementById("player");
-			var myNametag = player.querySelector(".nametag");
-			myNametag.setAttribute("text", "value", params.username);
-		};
-
 		// Setup networked-scene
 		var networkedComp = {
+			app: "tsaevent",
 			room: params.room,
-			adapter: adapter,
-			audio: voice,
+			debug: true,
+			connectOnLoad: false,
 		};
 		console.info("Init networked-aframe with settings:", networkedComp);
 		el.setAttribute("networked-scene", networkedComp);
-		el.emit("connect", null, false);
+
+		var scene = document.querySelector("a-scene");
+
+		if (scene.hasLoaded) {
+			this.onSceneLoad(params);
+		} else {
+			scene.addEventListener("loaded", (params) => {
+				this.onSceneLoad(params);
+			});
+		}
 	},
 
 	getUrlParams: function () {
@@ -48,5 +47,34 @@ AFRAME.registerComponent("dynamic-room", {
 			match = search.exec(query);
 		}
 		return urlParams;
+	},
+
+	onSceneLoad: function (params) {
+		var username;
+		if (params.username) {
+			username = params.username;
+		} else {
+			username = "user-" + makeId(5).toLowerCase();
+			username = prompt("Choose a username", username);
+		}
+
+		var myNametag = document.getElementById("player").querySelector(".nametag");
+		myNametag.setAttribute("text", "value", username);
+
+		document.getElementById("hideme").setAttribute("visible", "false");
+		console.log(document.getElementById("hideme").getAttribute("visible"));
+
+		document.querySelector("a-scene").components["networked-scene"].connect();
+	},
+
+	makeId: function (length) {
+		var text = "";
+		var possible =
+			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		for (var i = 0; i < length; i++)
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+		return text;
 	},
 });
