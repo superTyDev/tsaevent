@@ -60,9 +60,7 @@ AFRAME.registerComponent("dynamic-room", {
 
 		var myNametag = document.getElementById("player").querySelector(".nametag");
 		myNametag.setAttribute("text", "value", username);
-
-		document.getElementById("hideme").setAttribute("visible", "false");
-		console.log(document.getElementById("hideme").getAttribute("visible"));
+        switchAvatar();
 
 		document.querySelector("a-scene").components["networked-scene"].connect();
 	},

@@ -21,8 +21,8 @@
 
 <body>
 	<div class="hud" style="position: fixed; z-index: 1; top: 20px; left: 20px">
-		<button onclick="document.getElementById('hideme').setAttribute('visible', 'true')">
-			Make Square
+		<button onclick="switchAvatar()">
+			Change Costume
 		</button>
 	</div>
 	<a-scene dynamic-room>
@@ -37,7 +37,7 @@
 						scale="8 8 8"></a-entity>
 
 					<a-entity class="avatar">
-						<a-box class="head" id="hideme" color="#5985ff" scale="0.45 0.75 0.45" random-color></a-box>
+						<a-box class="head" color="#5985ff" scale="0.45 0.75 0.45" random-color></a-box>
 						<a-sphere class="head" color="#5985ff" scale="0.45 0.5 0.37" random-color></a-sphere>
 						<a-entity class="face" position="0 0.05 0">
 							<a-sphere class="eye" color="#efefef" position="0.16 0.1 -0.35" scale="0.16 0.16 0.16">
@@ -67,6 +67,7 @@
 	</a-scene>
 
 	<script>
+		var costume = 0;
 		// Define custom schema for syncing avatar color, set by random-color, and name tag
 		NAF.schemas.add({
 			template: "#avatar-template",
@@ -89,6 +90,25 @@
 				},
 			],
 		});
+		function switchAvatar() {
+			var heads = document.querySelectorAll('#player .head');
+			console.log(costume);
+			costume += 1;
+
+			if (costume >= heads.length) {
+				costume = 0;
+			}
+
+			for (var i = 0; i < heads.length - 1; i++) {
+				if (i == costume) {
+					heads[i].setAttribute('visible', true);
+					// heads[i].innerHTML("something dramatic");
+				} else {
+					heads[i].setAttribute('visible', false);
+				}
+				console.log(heads[i].getAttribute('visible'))
+			}
+		}
 	</script>
 </body>
 
