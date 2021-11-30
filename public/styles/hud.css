@@ -1,0 +1,8 @@
+.hud {
+				background-color: rgba(100, 100, 255, 0.5);
+}
+
+.hud button {
+				width: 100%;
+				padding: 50px;
+}
