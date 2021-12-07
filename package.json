@@ -1,12 +1,21 @@
 {
-  "name": "tsamain",
-  "version": "1.0.0",
-  "description": "Multi-user virtual reality event space for the TSA webmaster competition",
-  "scripts": {
-    "start": "node ./server/easyrtc-server.js"
-  },
-  "author": "Tyson M",
-  "dependencies": {
-    "networked-aframe": "^0.8.0"
-  }
+    "name": "tsaevent",
+    "version": "0.0.1",
+    "description": "What am I about?",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "networked-aframe": "^0.8.0"
+    },
+    "repository": {
+        "url": "https://github.com/superTyDev/tsaevent.git"
+    },
+    "license": "MIT",
+    "keywords": [
+        "node",
+        "glitch",
+        "express"
+    ]
 }
