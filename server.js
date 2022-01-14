@@ -7,7 +7,7 @@ var socketIo = require("socket.io"); // web socket external module
 process.title = "tsaevent";
 
 // Get port or default to 8080
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8081;
 
 // Setup and configure Express http server. Expect a subfolder called "static" to be the web root.
 var app = express();
@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
 
 		console.log(`${socket.id} joined room ${room}`);
 		socket.join(room);
-
+		console.log({ joinedTime });
 		socket.emit("connectSuccess", { joinedTime });
 		const occupants = rooms[room].occupants;
 		io.in(curRoom).emit("occupantsChanged", { occupants });
